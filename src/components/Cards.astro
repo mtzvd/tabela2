@@ -1,0 +1,9 @@
+---
+import Card from '../components/Card.astro'
+const {posts}=Astro.props; 
+---
+
+<ul>
+    {posts.map((post: { title: any; description: any; }) => (<Card title={post.title} description={post.description} />	
+    ))}    
+</ul>

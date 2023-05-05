@@ -1,15 +1,27 @@
 ---
+import { parseStringPromise } from "xml2js";
+import BaseLayout from '../layouts/BaseLayout.astro'
+import Cards from "../components/Cards.astro";
+
+const response = await fetch("https://rss.nbp.pl/kursy/TabelaA.xml");
+const buffer =  await response.arrayBuffer();
+const xml = new TextDecoder("ISO-8859-2").decode(buffer)
+const result = await parseStringPromise(xml);
+const feed_title = result.rss.channel[0].title[0];
+const posts = result.rss.channel[0].item.map((item: any) => ({
+    title: item.title[0],
+    link: item.link[0],
+    description: item.description[0],
+  }));
+
+
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title={feed_title} description={feed_title}>
+      <div class="container is-max-desktop">
+        <h1 class="title ">{feed_title}</h1>
+        <Cards posts={posts}>
+
+        </Cards>
+      </div>
+</BaseLayout>    

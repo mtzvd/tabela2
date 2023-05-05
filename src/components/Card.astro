@@ -1,0 +1,16 @@
+---
+const {title, description} = Astro.props;
+---
+<li>  
+    <details>
+    </br>
+        <summary class="is-underlined is-clickable block">{title}</summary>    
+            <div class="columns" >        
+                <div class="is-one-fourth ">
+                    <div class="content box " set:html= {description} ></div>
+                </div>
+            </div>
+    </br>
+    </details>
+</li>
+

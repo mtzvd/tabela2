@@ -1,0 +1,14 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+const {title, description}=Astro.props;
+
+---
+
+<html>
+  <BaseHead title={title} description={description}/>
+  <body>
+   <section class="section">
+      <slot />
+    </section>
+  </body>
+</html>
